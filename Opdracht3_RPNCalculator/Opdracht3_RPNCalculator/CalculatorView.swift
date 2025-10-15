@@ -8,50 +8,79 @@
 import SwiftUI
 
 struct CalculatorView: View {
-    @State var result: String = "5366984"
+    @State var calcEngine = CalcEngine()
     var body: some View {
-        HStack{
-            VStack{
-                TextEditor(text: .constant(result))
-                Button("Show stack"){
+        VStack(alignment: .leading){
+                    HStack {
+                        TextEditor(text: .constant(calcEngine.result)).padding(2).frame(width: 100, height: 150).border(Color.black)
+                            /*.scrollContentBackground(.hidden) // <- Hide scroll area background
+                                .background(.red) //-> change background color */
+                        Grid {
+                            
+                            GridRow {
+                                ForEach(7..<10) { number in
+                                    NumberButtonView(number: number) {
+                                        calcEngine.addNumberText(number: number)
+                                    }
+                                }
+                                
+                                Button("/") {
+                                    calcEngine.dividerOperatorPressed()
+                                }
+                            }
+                            GridRow {
+                                //ForEach(4..<7) { number in
+                                //of zoals hieronder maar dan met id
+                                ForEach(4...6, id: \.self) { number in
+                                    NumberButtonView(number: number) {
+                                        calcEngine.addNumberText(number: number)
+                                    }
+                                }
+                                Button("*") {
+                                    calcEngine.multiplierOperatorPressed()
+                                }
+                            }
+                            GridRow {
+                                ForEach(1..<4) { number in
+                                    NumberButtonView(number: number) {
+                                        calcEngine.addNumberText(number: number)
+                                    }
+                                }
+                                Button("-") {
+                                    calcEngine.minusOperatorPressed()
+                                }
+                            }
+                            GridRow {
+                                NumberButtonView(number: 0) {
+                                    calcEngine.addNumberText(number: 0)
+                                }
+                                
+                                Text("")
+                                Text("")
+                                Button("+") {
+                                    calcEngine.addOperatorPressed()
+                                }
+                            }
+                            GridRow {
+                                Button("Clear") {
+                                    calcEngine.clear()
+                                }.gridCellColumns(2)
+                                Button("Enter") {
+                                    calcEngine.addNumber()
+                                }.gridCellColumns(2)
+                                
+                            }
+                        }
+                       
+                    }
+                   
+                    Button("Show stack") {
+                        calcEngine.showStack()
+                    }
                     
                 }
             }
-            VStack{
-                Grid{
-                    GridRow{
-                        ForEach(7..<10){ number in Button("\(number)"){}
-                        }
-                        Button("/"){}
-                    }
-                    GridRow{
-                        ForEach(4..<7){ number in Button("\(number)"){}
-                        }
-                        Button("*"){}
-
-                    }
-                    GridRow{
-                        ForEach(1..<4){ number in Button("\(number)"){}
-                        }
-                        Button("-"){}
-
-                    }
-                    GridRow{
-                        Button("0"){}
-                        Text("")
-                        Text("")
-                        Button("+"){}
-                    }
-                    GridRow{
-                        Button("Clear"){}.gridCellColumns(2)
-                        Button("Enter"){}.gridCellColumns(2)
-                    }
-                }
-            }
         }
-        }
-    }
-
 #Preview {
     CalculatorView()
 }
