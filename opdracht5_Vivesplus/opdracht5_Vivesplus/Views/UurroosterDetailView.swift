@@ -8,11 +8,63 @@
 import SwiftUI
 
 struct UurroosterDetailView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    var event: EventModel
 
-#Preview {
-    UurroosterDetailView()
-}
+        var body: some View {
+            VStack {
+                HStack {
+                    HStack {
+                        Spacer()
+                        Text(event.title)
+                            .foregroundColor(Color.white)
+                            .padding( /*@START_MENU_TOKEN@*/
+                                .all /*@END_MENU_TOKEN@*/, 8)
+                        Spacer()
+                    }.background(Color.red).cornerRadius(10)
+                }.padding(.all, 5)
+                VStack {
+                    Divider()
+                    HStack {
+                        Text(event.location ?? "Locatie niet gekend")
+                        Spacer()
+                    }.padding(.bottom, 5)
+                    if event.allDay {
+                        HStack {
+                            Text("De volledige dag")
+                            Spacer()
+                            Text(DateUtil.formatDate(date: event.startDateTime))
+                        }
+                    } else {
+                        HStack {
+                            Text("Start")
+                            Spacer()
+                            Text(DateUtil.formatDateTime(date: event.startDateTime))
+
+                        }.padding(.bottom, 5)
+                        HStack {
+                            Text("Einde")
+                            Spacer()
+                            Text(DateUtil.formatDateTime(date: event.endDateTime))
+                        }
+                    }
+                    Divider()
+                    HStack {
+                        event.type == 0
+                            ? Image(systemName: "a.circle")
+                            : Image(systemName: "c.circle")
+                    }.padding(.top, 10)
+                }.padding(.leading, 20).padding(.trailing, 20)
+                Spacer()
+            }
+            .navigationTitle("Uurrooster detail")
+            .toolbar {
+                NavigationLink {
+                    AddModifyEventView(isNew: false, event: EventModel(from: event))
+                } label: {
+                    Text("...")
+                }
+
+            }
+        }
+
+    }

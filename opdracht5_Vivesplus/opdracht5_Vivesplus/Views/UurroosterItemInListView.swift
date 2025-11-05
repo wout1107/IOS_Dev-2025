@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct UurroosterItemInListView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    var event: EventModel
+        var body: some View {
+            VStack {
+                HStack{
+                    if event.allDay {
+                        Text(DateUtil.formatDate(date: event.startDateTime)).font(.headline)
+                        
+                    } else {
+                        Text(DateUtil.formatDateTime(date: event.startDateTime)).font(.headline)
+                        
+                    }
+                    Spacer()
+                }
+                HStack{
+                    Text(event.title).font(.subheadline)
+                    Spacer()
+                }
+            }
+        }
     }
-}
-
-#Preview {
-    UurroosterItemInListView()
-}

@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct UurroosterRow: View {
+    var uurrooster: EventModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack{
+                Text(uurrooster.title)
+                    .foregroundColor(Color.white)
+                    .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                    .background(Color.black)
+                    .cornerRadius(10
+                    )
+            }
+            Divider()
+            Spacer()
+        }
+        
     }
 }
 
-#Preview {
-    UurroosterRow()
-}
