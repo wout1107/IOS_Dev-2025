@@ -64,7 +64,9 @@ class UurroosterDataStore {
             print("⏳ Simulating 2-second load delay...")
             try await Task.sleep(for: .seconds(2)) // Simulate long load
             let data: [EventModelJson] = try load("uurrooster.json")
-            //Hier komt mapping naar array van EventModel -> uurrooster
+            uurrooster = data.map({ evenModelJson in
+                            evenModelJson.toEventModel()
+                        })
             sort()
             print("✅ Data loaded successfully.")
             

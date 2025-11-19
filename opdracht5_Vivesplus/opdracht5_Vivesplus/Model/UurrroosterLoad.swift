@@ -7,9 +7,9 @@
 
 import Foundation
 
-//var uurroosterData : [UurroosterModel] = load("uurrooster.json")
+//var uurroosterData : [EventModel] = load("uurrooster.json")
 
-/*func getUurroosterData() -> [UurroosterModel] {
+/*func getUurroosterData() -> [EventModel] {
     print("ophalen data")
     return load("uurrooster.json")
 }*/

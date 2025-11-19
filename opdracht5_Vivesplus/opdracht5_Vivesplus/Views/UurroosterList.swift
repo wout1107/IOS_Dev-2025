@@ -15,36 +15,37 @@ struct UurroosterList: View {
     
     var body: some View {
         NavigationSplitView {
-            // Sidebar
-            if loading {
-                ProgressView("Loading...")
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .padding()
-            } else {
-                List(uurroosterDataStore.uurrooster, id: \.self, selection: $selectedEvent) { event in
-                    VStack {
-                        HStack {
-                            if event.allDay {
-                                Text(DateUtil.formatDate(date: event.startDateTime))
-                                    .font(.headline)
-                            } else {
-                                Text(DateUtil.formatDateTime(date: event.startDateTime))
-                                    .font(.headline)
+            Group {
+                if loading {
+                    ProgressView("Loading...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding()
+                } else {
+                    List(uurroosterDataStore.uurrooster, id: \.self, selection: $selectedEvent) { event in
+                        VStack {
+                            HStack {
+                                if event.allDay {
+                                    Text(DateUtil.formatDate(date: event.startDateTime))
+                                        .font(.headline)
+                                } else {
+                                    Text(DateUtil.formatDateTime(date: event.startDateTime))
+                                        .font(.headline)
+                                }
+                                Spacer()
                             }
-                            Spacer()
-                        }
-                        HStack {
-                            Text(event.title).font(.subheadline)
-                            Spacer()
+                            HStack {
+                                Text(event.title).font(.subheadline)
+                                Spacer()
+                            }
                         }
                     }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        NavigationLink {
-                            AddModifyEventView(isNew: true, event: EventModel())
-                        } label: {
-                            Image(systemName: "plus")
+                    .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            NavigationLink {
+                                AddModifyEventView(isNew: true, event: EventModel())
+                            } label: {
+                                Image(systemName: "plus")
+                            }
                         }
                     }
                 }
@@ -53,12 +54,12 @@ struct UurroosterList: View {
                 await uurroosterDataStore.loadData()
                 loading = false
             }
+
         } detail: {
-            // Detail
             if let selectedEvent = selectedEvent {
-                AnyView(UurroosterDetailView(event: selectedEvent))
+                UurroosterDetailView(event: selectedEvent)
             } else {
-                AnyView(Text("Selecteer event"))
+                Text("Selecteer event")
             }
         }
     }

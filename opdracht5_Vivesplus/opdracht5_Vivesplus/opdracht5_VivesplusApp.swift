@@ -11,8 +11,7 @@ import SwiftUI
 struct opdracht5_VivesplusApp: App {
     var body: some Scene {
         WindowGroup {
-            UurroosterList()
-                .environment(UurroosterDataStore())
+            ContentView()
         }
     }
 }
